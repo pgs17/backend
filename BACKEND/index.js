@@ -9,7 +9,7 @@ app.use(express.json()); // if we dont do this then json body request gives erro
 
 const mongoose = require("mongoose")
 const UserModel = require("./MODELS/User")
-mongoose.connect( "mongodb+srv://sarangipriyanshu:Kanha%402003@cluster0.qpmdgyx.mongodb.net/MERNTUTORIAL?retryWrites=true&w=majority" )
+mongoose.connect( "mongodb+srv://sarangipriyanshu:<password>@cluster0.qpmdgyx.mongodb.net/ <mongodb project name >?retryWrites=true&w=majority" )
 
 // request data to backend or give it using express 
 app.get("/getusers", async (request , response) => {
