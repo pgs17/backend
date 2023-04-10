@@ -24,9 +24,9 @@ app.get("/getusers", async (request , response) => {
 
 
 // add data to database 
-app.post("/adduser", async(request , response)=> {
+app.post("/addusers", async(request , response)=> {
                   const {name,age,Username} =request.body;
-                  const newuser = new UserModel({name,age,Username});
+                  const newuser = new UserModel({ name,age,Username});
                   await newuser.save();
                   response.send(newuser);
                    
