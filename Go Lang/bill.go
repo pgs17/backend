@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 // model bill with name items tip
 type bill struct {
@@ -20,7 +23,7 @@ func new_bill(name string) bill {
 	return bill1
 }
 
-//returns formatted bill
+// returns formatted bill
 func (b *bill) format() string {
 	formatted_bill := "Bill Breakdown \n"
 	var total_bill float64 = 0
@@ -48,4 +51,17 @@ func (b *bill) add_items(name string, price float64) {
 	b.items[name] = price
 }
 
-//
+// save the bill
+
+func (b *bill) save() {
+
+	// store data in byte slice
+	data := []byte(b.format())
+	err := os.WriteFile("bills/"+b.name+".txt", data, 0644)
+
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("Bill was Saved")
+
+}

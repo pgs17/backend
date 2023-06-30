@@ -1,0 +1,5 @@
+Bill Breakdown 
+Chicken Masala:           ...$9
+Roti:                     ...$6
+tip:                      ...$3
+total:                    ...$15.00
