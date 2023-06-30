@@ -1,7 +1,8 @@
 package main
 
-// model bill with name items tip
+import "fmt"
 
+// model bill with name items tip
 type bill struct {
 	name  string
 	items map[string]float64
@@ -18,3 +19,33 @@ func new_bill(name string) bill {
 	}
 	return bill1
 }
+
+//returns formatted bill
+func (b *bill) format() string {
+	formatted_bill := "Bill Breakdown \n"
+	var total_bill float64 = 0
+
+	// items show
+	for index, value := range b.items {
+		formatted_bill += fmt.Sprintf("%-25v ...$%v\n", index+":", value)
+		total_bill += value
+	}
+
+	formatted_bill += fmt.Sprintf("%-25v ...$%v\n", "tip:", b.tip)
+
+	formatted_bill += fmt.Sprintf("%-25v ...$%0.2f", "total:", total_bill)
+
+	return formatted_bill
+}
+
+// update tip
+func (b *bill) update_tip(tip float64) {
+	b.tip = tip
+}
+
+// add items to our list
+func (b *bill) add_items(name string, price float64) {
+	b.items[name] = price
+}
+
+//
