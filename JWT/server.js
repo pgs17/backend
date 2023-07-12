@@ -1,21 +1,25 @@
-const express= require("express")
+
+require('dotenv').config()
+
+const express = require('express')
 const app = express()
-const jwt=require('jsonwebtoken')
-require('dotenv').config();
+const jwt = require('jsonwebtoken')
+
 app.use(express.json())
-const posts=[{
-    name:"Priyanshu",
-    title:"Post 1"
-},
-{
-    name:"Jimin",
-    title:"Post 2"
-}]
-app.get('/posts', authenticateToken , (req,res) =>{
-    
-    res.json(posts.filter(post=>{
-        post.name===req.user.name
-    })) // to return something
+
+const posts = [
+  {
+    username: 'Kyle',
+    title: 'Post 1'
+  },
+  {
+    username: 'Jim',
+    title: 'Post 2'
+  }
+]
+
+app.get('/posts', authenticateToken, (req, res) => {
+  res.json(posts.filter(post => post.username === req.user.name))
 })
 
 app.post('/login',(req,res)=>{
@@ -30,25 +34,18 @@ app.post('/login',(req,res)=>{
 
 
 // middleware
-function authenticateToken(req,res,next){
-// get the token and verify the user and send it to get request Bearer Token
-const authheader=req.headers['authorization']
-const token = authheader && authheader.split(' ')[1]
+function authenticateToken(req, res, next) {
+    // TOKEN IS IN FORM BEARER TOKEN
+    const authHeader = req.headers['Authorization']
+  const token = authHeader && authHeader.split(' ')[1]
+  if (token == null) return res.sendStatus(401)
 
-if(token==null){
-    return res.sendStatus(401)
-}
-
-jwt.verify(token,process.env.ACCESS_TOKEN_SECRET,(err,user)=>{
-    
-    if(err){
-        return res.sendStatus(403)
-    }
-    req.user=user
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    console.log(err)
+    if (err) return res.sendStatus(403)
+    req.user = user
     next()
-})
+  })
 }
 
-app.listen(3000,()=>{
-    console.log("server is running")
-})
+app.listen(3000)
